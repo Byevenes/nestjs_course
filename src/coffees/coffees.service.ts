@@ -1,11 +1,25 @@
-import { Inject, Injectable, NotFoundException } from '@nestjs/common';
+import { Inject, Injectable, NotFoundException, Scope } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { DataSource, Repository } from 'typeorm';
 import { Coffee, Event, Flavor } from './entities';
 import { CreateCoffeeDto, UpdateCoffeeDto, PaginationQueryDto } from './dto';
 import { COFFEE_BRANDS } from './coffees.constans';
 
-@Injectable()
+// Scope DEFAULT - This is assumed when NO Scope is entered like so: @Injectable() */
+/** 
+ * Scope TRANSIENT 
+  
+ * Transient providers are NOT shared across consumers. 
+ * Each consumer that injects a transient provider 
+ * will receive a new, dedicated instance of that provider. 
+ */
+/**
+ * Scope REQUEST 
+
+ * Request scope provides a new instance of the provider 
+ * exclusively for each incoming request. 
+ */
+@Injectable({ scope: Scope.REQUEST })
 export class CoffeesService {
   constructor(
     @InjectRepository(Coffee)
@@ -15,7 +29,7 @@ export class CoffeesService {
     private readonly dataSource: DataSource,
     @Inject(COFFEE_BRANDS) coffeeBrands: string[],
   ) {
-    console.log(coffeeBrands);
+    console.log('CoffeeService instantiated');
   }
 
   findAll(paginationQuery: PaginationQueryDto) {
