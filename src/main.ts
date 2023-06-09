@@ -9,6 +9,9 @@ async function bootstrap() {
       whitelist: true, // this will remove any properties that are not in the DTO
       transform: true, // this will transform the payload to the DTO type
       forbidNonWhitelisted: true, // this will throw an error if there are properties that are not in the DTO
+      transformOptions: {
+        enableImplicitConversion: true, // this will transform the payload to the DTO type
+      },
     }),
   );
   await app.listen(3000);
