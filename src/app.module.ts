@@ -3,6 +3,7 @@ import { AppController } from './app.controller';
 import { AppService } from './app.service';
 import { CoffeesModule } from './coffees/coffees.module';
 import { TypeOrmModule } from '@nestjs/typeorm';
+import { CoffeeRatingModule } from './coffee-rating/coffee-rating.module';
 
 @Module({
   imports: [
@@ -17,6 +18,7 @@ import { TypeOrmModule } from '@nestjs/typeorm';
       autoLoadEntities: true, // TypeORM will automatically load the entities from the entities folder
       synchronize: true, // TypeORM will automatically synchronize the database schema with the entities
     }),
+    CoffeeRatingModule,
   ],
   controllers: [AppController],
   providers: [AppService],
