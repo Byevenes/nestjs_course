@@ -3,7 +3,8 @@ import { InjectRepository } from '@nestjs/typeorm';
 import { DataSource, Repository } from 'typeorm';
 import { Coffee, Event, Flavor } from './entities';
 import { CreateCoffeeDto, UpdateCoffeeDto, PaginationQueryDto } from './dto';
-import { COFFEE_BRANDS } from './coffees.constans';
+import coffeesConfig from './config/coffees.config';
+import { ConfigType } from '@nestjs/config';
 
 // Scope DEFAULT - This is assumed when NO Scope is entered like so: @Injectable() */
 /** 
@@ -27,9 +28,12 @@ export class CoffeesService {
     @InjectRepository(Flavor)
     private readonly flavorRepository: Repository<Flavor>,
     private readonly dataSource: DataSource,
-    @Inject(COFFEE_BRANDS) coffeeBrands: string[],
+    @Inject(coffeesConfig.KEY)
+    private readonly coffeesConfiguration: ConfigType<typeof coffeesConfig>,
   ) {
     console.log('CoffeeService instantiated');
+    // Now strongly typed, and able to access properties via:
+    console.log(coffeesConfiguration.foo);
   }
 
   findAll(paginationQuery: PaginationQueryDto) {
