@@ -3,7 +3,6 @@ import {
   Controller,
   Delete,
   Get,
-  Inject,
   Param,
   Patch,
   Post,
@@ -11,23 +10,26 @@ import {
 } from '@nestjs/common';
 import { CoffeesService } from './coffees.service';
 import { CreateCoffeeDto, PaginationQueryDto, UpdateCoffeeDto } from './dto';
-import { REQUEST } from '@nestjs/core';
-
+import { ParseIntPipe, Protocol, Public } from 'src/common';
 @Controller('coffees')
 export class CoffeesController {
   constructor(
     private readonly coffeesService: CoffeesService, //@Inject(REQUEST) private request: Request) {} // 👈
-  ) {
-    console.log('CoffeesController instantiated');
-  }
+  ) { }
 
+  @Public()
   @Get()
-  findAll(@Query() paginationQuery: PaginationQueryDto) {
+  findAll(
+    @Protocol('http') protocol: string,
+    @Query() paginationQuery: PaginationQueryDto,
+  ) {
+    //await new Promise((resolve) => setTimeout(resolve, 5000));
+    console.log('protocol', protocol);
     return this.coffeesService.findAll(paginationQuery);
   }
 
   @Get(':id')
-  findOne(@Param('id') id: string) {
+  findOne(@Param('id', ParseIntPipe) id: string) {
     return this.coffeesService.findOne(id);
   }
 

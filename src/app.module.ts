@@ -6,7 +6,11 @@ import { TypeOrmModule } from '@nestjs/typeorm';
 import { CoffeeRatingModule } from './coffee-rating/coffee-rating.module';
 import { DatabaseModule } from './database/database.module';
 import { ConfigModule } from '@nestjs/config';
-import { configValidationSchema } from './config/config.interface';
+import {
+  configValidationSchema,
+  configValidationType,
+} from './config/config.interface';
+import { CommonModule } from './common/common.module';
 import appConfig from './config/app.config';
 
 @Module({
@@ -27,7 +31,7 @@ import appConfig from './config/app.config';
       load: [appConfig], // This is to load the config object
       //ignoreEnvFile: true, // This is to ignore the .env file in production
       // validate: config, // This is to validate the config object
-      validate: (config) => {
+      validate: (config: configValidationType) => {
         // This is to validate the config object
         // if you want to use a custom validation function
         // instead of the config object
@@ -43,6 +47,7 @@ import appConfig from './config/app.config';
     CoffeesModule,
     CoffeeRatingModule,
     DatabaseModule,
+    CommonModule,
   ],
   controllers: [AppController],
   providers: [AppService],

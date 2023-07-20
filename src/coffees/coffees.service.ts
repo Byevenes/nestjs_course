@@ -31,9 +31,8 @@ export class CoffeesService {
     @Inject(coffeesConfig.KEY)
     private readonly coffeesConfiguration: ConfigType<typeof coffeesConfig>,
   ) {
-    console.log('CoffeeService instantiated');
     // Now strongly typed, and able to access properties via:
-    console.log(coffeesConfiguration.foo);
+    // console.log(coffeesConfiguration.foo);
   }
 
   findAll(paginationQuery: PaginationQueryDto) {
