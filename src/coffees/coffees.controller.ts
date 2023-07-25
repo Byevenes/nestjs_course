@@ -8,15 +8,19 @@ import {
   Post,
   Query,
 } from '@nestjs/common';
+import { ApiForbiddenResponse, ApiTags } from '@nestjs/swagger';
 import { CoffeesService } from './coffees.service';
 import { CreateCoffeeDto, PaginationQueryDto, UpdateCoffeeDto } from './dto';
 import { ParseIntPipe, Protocol, Public } from 'src/common';
+
+@ApiTags('coffees')
 @Controller('coffees')
 export class CoffeesController {
   constructor(
     private readonly coffeesService: CoffeesService, //@Inject(REQUEST) private request: Request) {} // 👈
   ) { }
 
+  @ApiForbiddenResponse({ description: 'Forbidden.' })
   @Public()
   @Get()
   findAll(
