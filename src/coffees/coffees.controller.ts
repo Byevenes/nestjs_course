@@ -11,7 +11,7 @@ import {
 import { ApiForbiddenResponse, ApiTags } from '@nestjs/swagger';
 import { CoffeesService } from './coffees.service';
 import { CreateCoffeeDto, PaginationQueryDto, UpdateCoffeeDto } from './dto';
-import { ParseIntPipe, Protocol, Public } from 'src/common';
+import { ParseIntPipe, Protocol, Public } from '../common';
 
 @ApiTags('coffees')
 @Controller('coffees')
